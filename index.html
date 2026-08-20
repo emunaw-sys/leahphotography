@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Leah Photography — Structure Wireframe</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&family=IBM+Plex+Mono:wght@400;500&family=Karla:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#eeece7;
+    --card:#ffffff;
+    --ink:#0d0d0c;
+    --mid:#3f3d39;
+    --line:#9c968b;
+    --block:#cfc9bd;
+    --block-2:#bdb6a8;
+    --note:#4a2f13;
+    --note-bg:#f2e4d0;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Karla',sans-serif;
+    font-weight:400;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  /* ---------- control bar ---------- */
+  .bar{
+    position:sticky;top:0;z-index:50;
+    background:rgba(244,242,238,.94);
+    backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--line);
+    padding:14px 24px;
+    display:flex;align-items:center;gap:22px;flex-wrap:wrap;
+  }
+  .bar h1{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:11px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--ink);
+  }
+  .tabs{display:flex;gap:6px;flex-wrap:wrap}
+  .tab{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:11px;letter-spacing:.08em;text-transform:uppercase;
+    padding:7px 14px;border:1px solid var(--mid);background:#fff;
+    color:var(--ink);font-weight:500;cursor:pointer;border-radius:2px;transition:.18s;
+  }
+  .tab:hover{border-color:var(--ink);color:var(--ink)}
+  .tab.on{background:var(--ink);border-color:var(--ink);color:var(--paper)}
+
+  /* ---------- page frame ---------- */
+  .stage{max-width:1080px;margin:0 auto;padding:34px 24px 90px}
+  .page{display:none}
+  .page.on{display:block}
+  .browser{
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:4px;
+    overflow:hidden;
+  }
+  .chrome{
+    display:flex;align-items:center;gap:7px;
+    padding:11px 14px;border-bottom:1px solid var(--line);background:#e2ded6;
+  }
+  .dot{width:9px;height:9px;border-radius:50%;background:var(--block-2)}
+  .url{
+    margin-left:10px;font-family:'IBM Plex Mono',monospace;font-size:11px;
+    color:var(--mid);letter-spacing:.04em;
+  }
+
+  /* ---------- section scaffold ---------- */
+  .sec{border-bottom:1px dashed var(--mid);padding:0 0 4px}
+  .sec:last-child{border-bottom:none}
+  .tag{
+    font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.14em;
+    text-transform:uppercase;color:var(--mid);font-weight:500;
+    padding:12px 20px 0;display:block;
+  }
+  .inner{padding:14px 34px 30px}
+
+  /* ---------- placeholder blocks ---------- */
+  .ph{
+    background:var(--block);
+    border:1px dashed #7d766a;
+    display:flex;align-items:center;justify-content:center;
+    font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.1em;
+    text-transform:uppercase;color:#3f3d39;text-align:center;padding:10px;
+  }
+  .ph.hero{height:330px}
+  .ph.tall{height:300px}
+  .ph.med{height:190px}
+  .ph.sm{height:130px}
+  .row{display:grid;gap:12px}
+  .r3{grid-template-columns:repeat(3,1fr)}
+  .r2{grid-template-columns:repeat(2,1fr)}
+  .r2-wide{grid-template-columns:1.6fr 1fr}
+
+  /* ---------- fake nav ---------- */
+  .nav{
+    display:flex;justify-content:space-between;align-items:center;
+    padding:20px 34px;border-bottom:1px solid var(--line);
+  }
+  .brand{font-family:'Cormorant Garamond',serif;font-size:19px;letter-spacing:.06em}
+  .navlinks{display:flex;gap:22px;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink)}
+
+  /* ---------- copy styling ---------- */
+  .statement{
+    font-family:'Cormorant Garamond',serif;
+    font-size:26px;line-height:1.5;font-weight:400;color:var(--ink);
+    max-width:30ch;margin:26px auto;text-align:center;
+  }
+  .sub{
+    font-family:'Cormorant Garamond',serif;font-style:italic;
+    font-size:15px;color:#2a2824;text-align:center;margin-bottom:8px;
+  }
+  h3.blk{
+    font-family:'Cormorant Garamond',serif;font-size:19px;font-weight:500;color:var(--ink);
+    margin-bottom:7px;
+  }
+  p.body{font-size:13.5px;line-height:1.75;color:#171614;max-width:62ch}
+  .center{text-align:center;margin-left:auto;margin-right:auto}
+  .arrow{text-align:center;font-size:17px;color:var(--mid);padding:14px 0 22px}
+  .cta{
+    display:inline-block;font-family:'IBM Plex Mono',monospace;font-size:10.5px;
+    letter-spacing:.14em;text-transform:uppercase;
+    border:1.5px solid var(--ink);padding:11px 22px;color:var(--ink);font-weight:500;background:#fff;
+  }
+  .quiet-line{
+    text-align:center;font-size:13.5px;color:#171614;
+    padding:6px 0 18px;line-height:1.9;
+  }
+
+  /* ---------- annotation ---------- */
+  .note{
+    background:var(--note-bg);border-left:3px solid var(--note);
+    padding:9px 14px;margin:14px 34px 22px;
+    font-family:'IBM Plex Mono',monospace;font-size:11.5px;line-height:1.75;
+    color:var(--note);
+  }
+  .note b{font-weight:500}
+
+  /* ---------- option cards ---------- */
+  .opts{display:grid;gap:12px;grid-template-columns:repeat(3,1fr);margin-top:8px}
+  .opt{border:1px solid var(--line);background:#fff;padding:18px 16px}
+  .opt .lbl{
+    font-family:'IBM Plex Mono',monospace;font-size:10.5px;font-weight:500;letter-spacing:.12em;
+    text-transform:uppercase;color:var(--note);margin-bottom:10px;display:block;
+  }
+  .opt p{font-family:'Cormorant Garamond',serif;font-size:15.5px;line-height:1.6}
+
+  /* ---------- pricing / gallery cards ---------- */
+  .pkg{border:1px solid var(--line);background:#fff;padding:24px 20px;text-align:center}
+  .pkg .nm{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink);font-weight:500}
+  .pkg .pr{font-family:'Cormorant Garamond',serif;font-size:30px;margin:12px 0 14px}
+  .pkg ul{list-style:none;font-size:12.5px;line-height:2;color:#171614}
+  .gal{border:1px solid var(--line);background:#fff}
+  .gal .meta{padding:14px 16px;display:flex;justify-content:space-between;align-items:center}
+  .gal .fam{font-family:'Cormorant Garamond',serif;font-size:16px}
+  .gal .dt{font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:var(--mid);letter-spacing:.08em;font-weight:500}
+  .footer{
+    padding:30px 34px;border-top:1px solid var(--line);
+    display:flex;justify-content:space-between;flex-wrap:wrap;gap:14px;
+    font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--mid);font-weight:500;
+  }
+  .legend{
+    display:flex;gap:20px;flex-wrap:wrap;margin-bottom:22px;
+    font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--mid);letter-spacing:.06em;
+  }
+  .swatch{display:inline-block;width:11px;height:11px;margin-right:6px;vertical-align:-1px}
+  @media(max-width:760px){
+    .r3,.r2,.r2-wide,.opts{grid-template-columns:1fr}
+    .inner{padding:14px 18px 26px}
+    .nav{padding:16px 18px;flex-direction:column;gap:12px}
+    .note{margin:14px 18px 22px}
+  }
+</style>
+</head>
+<body>
+
+<div class="bar">
+  <h1>Leah Photography · Structure Wireframe</h1>
+  <div class="tabs">
+    <button class="tab on" data-p="home">Home</button>
+    <button class="tab" data-p="portfolio">Portfolio</button>
+    <button class="tab" data-p="investment">Investment</button>
+    <button class="tab" data-p="client">Client Galleries</button>
+  </div>
+</div>
+
+<div class="stage">
+
+  <div class="legend">
+    <span><span class="swatch" style="background:var(--block);border:1px dashed #7d766a"></span>Photo placeholder</span>
+    <span><span class="swatch" style="background:var(--note-bg);border-left:2px solid var(--note)"></span>Note for Leah</span>
+    <span>Grey = no design yet. Structure &amp; words only.</span>
+  </div>
+
+  <!-- ================= HOME ================= -->
+  <div class="page on" id="home">
+    <div class="browser">
+      <div class="chrome"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="url">leahphotos.com</span></div>
+
+      <div class="sec">
+        <span class="tag">01 · Navigation</span>
+        <div class="nav">
+          <div class="brand">Leah Photography</div>
+          <div class="navlinks"><span>Home</span><span>Portfolio</span><span>Investment</span><span>Galleries</span><span>Contact</span></div>
+        </div>
+      </div>
+
+      <div class="sec">
+        <span class="tag">02 · Hero — image only, no text</span>
+        <div class="inner">
+          <div class="ph hero">One full-width image &nbsp;— or —&nbsp; three from the same shoot</div>
+          <div class="arrow">↓</div>
+        </div>
+        <div class="note"><b>Two directions.</b> I'll design both and we pick the stronger. Nothing sits on top of the photo.</div>
+      </div>
+
+      <div class="sec">
+        <span class="tag">03 · The statement</span>
+        <div class="inner">
+          <p class="statement">Looking for a shoot where your family can just relax and be themselves? That's the part I care about most — bringing out the fun and creativity your family already has. When everyone's comfortable and enjoying it, the photos take care of themselves.</p>
+          <p class="sub">Full unedited gallery, every session.</p>
+        </div>
+        <div class="note">The first thing anyone reads after your photos. Kept short on purpose — it says what the experience feels like, then gets out of the way.</div>
+      </div>
+
+      <div class="sec">
+        <span class="tag">04 · Parallax image run</span>
+        <div class="inner">
+          <div class="ph tall" style="margin-bottom:12px">Layered / uncovering scroll effect — like Shira's homepage</div>
+          <div class="row r2"><div class="ph med">Image</div><div class="ph med">Image</div></div>
+        </div>
+      </div>
+
+      <div class="sec">
+        <span class="tag">05 · What you get</span>
+        <div class="inner">
+          <div class="row r3">
+            <div><h3 class="blk">The full gallery</h3><p class="body">Every photo from your shoot is yours. The full unedited gallery, not just the edited handful — nothing gets held back.</p></div>
+            <div><h3 class="blk">Formal and candid</h3><p class="body">Posed portraits, creative shots, and the real moments in between. You don't have to choose one style over the other.</p></div>
+            <div><h3 class="blk">Patient and unhurried</h3><p class="body">Shy kids, restless kids, teenagers who'd rather not be there. I go with the flow, and I don't rush anyone.</p></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="sec">
+        <span class="tag">06 · Investment line</span>
+        <div class="inner">
+          <p class="quiet-line">Family sessions start at $200, full unedited gallery included.</p>
+          <div style="text-align:center"><span class="cta">View investment →</span></div>
+        </div>
+        <div class="note">One quiet line here, full detail on the Investment page — so the homepage never reads as a price list.</div>
+      </div>
+
+      <div class="sec">
+        <span class="tag">07 · More work</span>
+        <div class="inner">
+          <div class="row r2-wide"><div class="ph tall">Image</div>
+            <div style="display:grid;gap:12px"><div class="ph sm">Image</div><div class="ph sm">Image</div></div>
+          </div>
+        </div>
+        <div class="note">Different rhythm from section 04 on purpose, so the scroll doesn't feel like one long slideshow.</div>
+      </div>
+
+      <div class="sec">
+        <span class="tag">08 · Hi, I'm Leah</span>
+        <div class="inner">
+          <div class="row r2" style="align-items:center">
+            <div class="ph tall">Photo of Leah — or a favourite image</div>
+            <div>
+              <h3 class="blk">Hi, I'm Leah.</h3>
+              <p class="body">I picked up a camera as a teenager and never really put it down. A few years and a lot of families later, I love it even more.</p>
+              <p class="body" style="margin-top:12px">I focus specifically on families. Every family has its own warmth and its own kind of fun, and my job is to get everyone comfortable enough to let it show.</p>
+              <p class="body" style="margin-top:12px">Formal shots, creative ones, and everything in between. Mostly I want you to enjoy the shoot — when people are relaxed and having a good time, that's when I get the photos they actually love.</p>
+            </div>
+          </div>
+        </div>
+        <div class="note"><b>Read this one out loud.</b> It's the only part of the site written as you, so it has to sound like you talking. Change any word that doesn't.</div>
+      </div>
+
+      <div class="sec">
+        <span class="tag">09 · Testimonials</span>
+        <div class="inner">
+          <div class="row r3">
+            <div class="gal"><div class="ph sm" style="border:none;border-bottom:1px dashed #c7c1b7">Family photo</div><div style="padding:16px"><p class="body" style="font-family:'Cormorant Garamond',serif;font-size:15px">“[Quote — patient with the kids]”</p></div></div>
+            <div class="gal"><div class="ph sm" style="border:none;border-bottom:1px dashed #c7c1b7">Family photo</div><div style="padding:16px"><p class="body" style="font-family:'Cormorant Garamond',serif;font-size:15px">“[Quote — fun, easy to work with]”</p></div></div>
+            <div class="gal"><div class="ph sm" style="border:none;border-bottom:1px dashed #c7c1b7">Family photo</div><div style="padding:16px"><p class="body" style="font-family:'Cormorant Garamond',serif;font-size:15px">“[Quote — loved the photos and the day]”</p></div></div>
+          </div>
+        </div>
+        <div class="note"><b>Send me your reviews</b> and I'll pull the strongest lines. We want the “so patient” / “amazing with my kids” ones — that's what a mother is quietly worried about. Photo beside each quote needs the family's permission.</div>
+      </div>
+
+      <div class="sec">
+        <span class="tag">10 · Closing image + get in touch</span>
+        <div class="inner">
+          <div class="ph tall" style="margin-bottom:26px">Closing full-width image</div>
+          <h3 class="blk center" style="text-align:center">Want photos like these?</h3>
+          <p class="body center" style="text-align:center">Tell me about your family and what you're thinking — I usually reply within a day.</p>
+          <div class="row r2" style="margin-top:20px;max-width:520px;margin-left:auto;margin-right:auto">
+            <div class="ph" style="height:38px">Name</div><div class="ph" style="height:38px">Phone / email</div>
+          </div>
+          <div class="ph" style="height:38px;max-width:520px;margin:12px auto 0">What kind of shoot</div>
+          <div class="ph" style="height:74px;max-width:520px;margin:12px auto 18px">Anything I should know</div>
+          <div style="text-align:center"><span class="cta">Send →</span></div>
+        </div>
+      </div>
+
+      <div class="footer"><span>Leah Photography</span><span>Client Galleries · Instagram · WhatsApp · Contact</span></div>
+    </div>
+  </div>
+
+  <!-- ================= PORTFOLIO ================= -->
+  <div class="page" id="portfolio">
+    <div class="browser">
+      <div class="chrome"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="url">leahphotos.com/portfolio</span></div>
+
+      <div class="sec">
+        <span class="tag">01 · Navigation</span>
+        <div class="nav">
+          <div class="brand">Leah Photography</div>
+          <div class="navlinks"><span>Home</span><span>Portfolio</span><span>Investment</span><span>Galleries</span><span>Contact</span></div>
+        </div>
+      </div>
+
+      <div class="sec">
+        <span class="tag">02 · Page opener</span>
+        <div class="inner">
+          <p class="statement" style="font-size:30px">The work</p>
+          <p class="body center" style="text-align:center">Families, mostly outdoors, mostly laughing. Have a look around — if something here feels like your family, we'll get on well.</p>
+        </div>
+      </div>
+
+      <div class="sec">
+        <span class="tag">03 · Main gallery grid</span>
+        <div class="inner">
+          <div class="row r3" style="margin-bottom:12px"><div class="ph med">Image</div><div class="ph med">Image</div><div class="ph med">Image</div></div>
+          <div class="row r2-wide" style="margin-bottom:12px"><div class="ph tall">Image</div><div class="ph tall">Image</div></div>
+          <div class="row r3" style="margin-bottom:12px"><div class="ph med">Image</div><div class="ph med">Image</div><div class="ph med">Image</div></div>
+          <div class="ph tall">Full-width image</div>
+        </div>
+        <div class="note"><b>Mixed grid, not a uniform tile wall.</b> Varying sizes keeps it interesting to scroll and lets your strongest frames breathe. Images fade in as you scroll. <b>Later:</b> this same layout is what splits into Family / Newborn / Commercial when you build those up.</div>
+      </div>
+
+      <div class="sec">
+        <span class="tag">04 · Mid-page breather</span>
+        <div class="inner">
+          <p class="quiet-line">Every session includes the full unedited gallery — so you see everything, not a selection.</p>
+        </div>
+        <div class="note">Repeating your differentiator once, quietly, halfway down. People who land straight on this page from a shared link never see the homepage.</div>
+      </div>
+
+      <div class="sec">
+        <span class="tag">05 · Continue the grid</span>
+        <div class="inner">
+          <div class="row r2" style="margin-bottom:12px"><div class="ph med">Image</div><div class="ph med">Image</div></div>
+          <div class="row r3"><div class="ph med">Image</div><div class="ph med">Image</div><div class="ph med">Image</div></div>
+        </div>
+      </div>
+
+      <div class="sec">
+        <span class="tag">06 · Close</span>
+        <div class="inner" style="text-align:center">
+          <h3 class="blk">Like what you see?</h3>
+          <p class="body center" style="text-align:center;margin-bottom:18px">Sessions start at $200, and I'd love to hear what you have in mind.</p>
+          <span class="cta">View investment →</span> &nbsp; <span class="cta">Get in touch →</span>
+        </div>
+      </div>
+
+      <div class="footer"><span>Leah Photography</span><span>Client Galleries · Instagram · WhatsApp · Contact</span></div>
+    </div>
+  </div>
+
+  <!-- ================= INVESTMENT ================= -->
+  <div class="page" id="investment">
+    <div class="browser">
+      <div class="chrome"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="url">leahphotos.com/investment</span></div>
+
+      <div class="sec">
+        <span class="tag">01 · Navigation</span>
+        <div class="nav">
+          <div class="brand">Leah Photography</div>
+          <div class="navlinks"><span>Home</span><span>Portfolio</span><span>Investment</span><span>Galleries</span><span>Contact</span></div>
+        </div>
+      </div>
+
+      <div class="sec">
+        <span class="tag">02 · Opener</span>
+        <div class="inner">
+          <p class="statement" style="font-size:30px">Investment</p>
+          <p class="body center" style="text-align:center">Every session, whichever you choose, includes access to the full unedited gallery.</p>
+        </div>
+        <div class="note">Leading with what's <b>included</b> rather than with a number. It frames the prices before anyone reads them.</div>
+      </div>
+
+      <div class="sec">
+        <span class="tag">03 · The three packages</span>
+        <div class="inner">
+          <div class="row r3">
+            <div class="pkg">
+              <div class="nm">The Mini</div>
+              <div class="pr">$200</div>
+              <p class="body" style="font-size:12.5px;text-align:center;margin:0 auto 12px;color:#171614">Half an hour, up to four people</p>
+              <ul><li>Full unedited gallery</li><li>4 edited images</li></ul>
+            </div>
+            <div class="pkg">
+              <div class="nm">The Family Session</div>
+              <div class="pr">$250</div>
+              <p class="body" style="font-size:12.5px;text-align:center;margin:0 auto 12px;color:#171614">An hour with your family, no cap on numbers</p>
+              <ul><li>Full unedited gallery</li><li>8 edited images</li></ul>
+            </div>
+            <div class="pkg">
+              <div class="nm">Everyone Together</div>
+              <div class="pr">$350</div>
+              <p class="body" style="font-size:12.5px;text-align:center;margin:0 auto 12px;color:#171614">75 minutes for extended family — grandparents, grandkids, and each family on its own</p>
+              <ul><li>Full unedited gallery</li><li>12 edited images</li></ul>
+            </div>
+          </div>
+        </div>
+        <div class="note"><b>Prices as we discussed.</b> Names changed so they describe what people are actually booking — "Everyone Together" reads far better than "extended family shoot". Worth marking The Family Session as your most booked, so people have a default instead of defaulting to the cheapest.</div>
+      </div>
+
+      <div class="sec">
+        <span class="tag">04 · Image break</span>
+        <div class="inner"><div class="ph tall">Full-width image</div></div>
+      </div>
+
+      <div class="sec">
+        <span class="tag">05 · How a session works</span>
+        <div class="inner">
+          <div class="row r3">
+            <div><h3 class="blk">01 · Before</h3><p class="body">We talk about what you're after, pick a spot and a time, and I'll tell you honestly what works for the light and for your kids.</p></div>
+            <div><h3 class="blk">02 · The shoot</h3><p class="body">Relaxed. Some posed, some creative, a lot of just letting your family be a family while I work around you.</p></div>
+            <div><h3 class="blk">03 · After</h3><p class="body">Your full unedited gallery, plus your edited images. Everything from the session is yours to keep.</p></div>
+          </div>
+        </div>
+        <div class="note">This section is doing quiet work: it answers “what am I actually paying for?” — which is what makes a price feel fair rather than high.</div>
+      </div>
+
+      <div class="sec">
+        <span class="tag">06 · Close</span>
+        <div class="inner" style="text-align:center">
+          <h3 class="blk">Ready when you are.</h3>
+          <p class="body center" style="text-align:center;margin-bottom:18px">Tell me about your family and what you're thinking.</p>
+          <span class="cta">Get in touch →</span>
+        </div>
+      </div>
+
+      <div class="footer"><span>Leah Photography</span><span>Client Galleries · Instagram · WhatsApp · Contact</span></div>
+    </div>
+  </div>
+
+  <!-- ================= CLIENT GALLERIES ================= -->
+  <div class="page" id="client">
+    <div class="browser">
+      <div class="chrome"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="url">leahphotos.com/galleries</span></div>
+
+      <div class="sec">
+        <span class="tag">01 · Navigation</span>
+        <div class="nav">
+          <div class="brand">Leah Photography</div>
+          <div class="navlinks"><span>Home</span><span>Portfolio</span><span>Investment</span><span>Galleries</span><span>Contact</span></div>
+        </div>
+      </div>
+
+      <div class="sec">
+        <span class="tag">02 · Opener</span>
+        <div class="inner">
+          <p class="statement" style="font-size:30px">Client galleries</p>
+          <p class="body center" style="text-align:center">Find your session below. Each gallery opens in a new window — your password is in the email I sent you.</p>
+        </div>
+        <div class="note"><b>Custom designed page.</b> Each block below links out to that family's Pixieset gallery — so this page stays on your site and in your branding, and Pixieset just handles the delivery behind it.</div>
+      </div>
+
+      <div class="sec">
+        <span class="tag">03 · Gallery blocks</span>
+        <div class="inner">
+          <div class="row r3" style="margin-bottom:12px">
+            <div class="gal"><div class="ph med" style="border:none;border-bottom:1px dashed #c7c1b7">Cover image</div><div class="meta"><span class="fam">The [Family] Family</span><span class="dt">Aug 2026 →</span></div></div>
+            <div class="gal"><div class="ph med" style="border:none;border-bottom:1px dashed #c7c1b7">Cover image</div><div class="meta"><span class="fam">The [Family] Family</span><span class="dt">Aug 2026 →</span></div></div>
+            <div class="gal"><div class="ph med" style="border:none;border-bottom:1px dashed #c7c1b7">Cover image</div><div class="meta"><span class="fam">The [Family] Family</span><span class="dt">Jul 2026 →</span></div></div>
+          </div>
+          <div class="row r3">
+            <div class="gal"><div class="ph med" style="border:none;border-bottom:1px dashed #c7c1b7">Cover image</div><div class="meta"><span class="fam">The [Family] Family</span><span class="dt">Jul 2026 →</span></div></div>
+            <div class="gal"><div class="ph med" style="border:none;border-bottom:1px dashed #c7c1b7">Cover image</div><div class="meta"><span class="fam">The [Family] Family</span><span class="dt">Jun 2026 →</span></div></div>
+            <div class="gal"><div class="ph med" style="border:none;border-bottom:1px dashed #c7c1b7">Cover image</div><div class="meta"><span class="fam">The [Family] Family</span><span class="dt">Jun 2026 →</span></div></div>
+          </div>
+        </div>
+        <div class="note"><b>Decisions needed:</b> (1) Do you want family names showing publicly, or just a date / a cover image? Some clients would rather not be listed. (2) How many stay up — most recent 6? 12? Everything? (3) Who adds a new one after each shoot — you, or me? If it's you, I'll make it simple.</div>
+      </div>
+
+      <div class="sec">
+        <span class="tag">04 · Can't find yours?</span>
+        <div class="inner" style="text-align:center">
+          <p class="body center" style="text-align:center;margin-bottom:16px">Gallery not here, or lost your password? Send me a message and I'll sort it out.</p>
+          <span class="cta">Message me →</span>
+        </div>
+      </div>
+
+      <div class="footer"><span>Leah Photography</span><span>Client Galleries · Instagram · WhatsApp · Contact</span></div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  document.querySelectorAll('.tab').forEach(function(t){
+    t.addEventListener('click',function(){
+      document.querySelectorAll('.tab').forEach(function(x){x.classList.remove('on')});
+      document.querySelectorAll('.page').forEach(function(x){x.classList.remove('on')});
+      t.classList.add('on');
+      document.getElementById(t.dataset.p).classList.add('on');
+      window.scrollTo({top:0,behavior:'smooth'});
+    });
+  });
+</script>
+</body>
+</html>
